@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        window.onload = function () {
+            var url = "http://api.mcsrvstat.us/2/play.evrstr.cc"/*json文件url*/
+            var request = new XMLHttpRequest();
+            request.open("get", url);/*设置请求方法与路径*/
+            request.send(null);/*不发送数据到服务器*/
+            request.onload = function () {/*XHR对象获取到返回信息后执行*/
+                console.log("111");
+                if (request.status == 200) {/*返回状态为200，即为数据获取成功*/
+
+                    console.log("222");
+                    
+                    var json = JSON.parse(request.responseText);
+                    var dat = '地址：';
+                    console.log(json.hostname);
+                    console.log(json.port);
+
+                    dat = dat + json.ip+':'+json.port+'\r'+'版本：'+ json.version;
+                    dat = '在线：'+json.online+'\r'+'人数：'+json.players.online + '/' + json.players.max+'\r'+ 'MOTD：';
+
+                    for (var i = 0; i < json.motd.clean.length; i++) {
+                        console.log(json.motd.clean[i]);
+                        dat = dat + json.motd.clean[i]+'\r';
+                    }
+                    console.log(json.players.online);
+                    console.log(json.players.max);
+                    console.log(json.version);
+                    console.log(json.online);
+                    console.log(json.hostname);
+
+                   
+
+                    document.getElementsByTagName('body')[0].innerHTML=dat;
+
+                    // console.log(json);
+
+                }
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>
